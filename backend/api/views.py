@@ -73,7 +73,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
             name=F('ingredient__name'),
             units=F('ingredient__measurement_unit'),
             total=Sum('amount'),
-        ).order_by('-total') 
+        ).order_by('-total')
 
         obj_dic = {
             "file_name": "%s_%s.pdf"
