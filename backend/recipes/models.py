@@ -1,4 +1,5 @@
 from colorfield.fields import ColorField
+from django.conf import settings
 from django.core.validators import MinValueValidator
 from django.db import models
 
@@ -108,7 +109,7 @@ class Recipe(CreatedModel):
         return f"/posts/{self.pk}/"
 
     def __str__(self):
-        return self.name[:15]
+        return self.name[:settings.RECIPE_NAME_LENGTH]
 
 
 class FavoriteRecipe(CreatedModel):

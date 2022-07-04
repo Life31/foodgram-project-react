@@ -3,6 +3,8 @@ from django.db import transaction
 from django.utils.datastructures import MultiValueDictKeyError
 from drf_extra_fields.fields import Base64ImageField
 from rest_framework import serializers
+from rest_framework.response import Response
+from rest_framework.status import HTTP_400_BAD_REQUEST
 from rest_framework.exceptions import ValidationError
 from rest_framework.validators import UniqueTogetherValidator
 
@@ -76,6 +78,8 @@ class RecipeSerializer(serializers.ModelSerializer):
 
     def get_is_favorited(self, obj):
         user = self.context.get("request").user
+        if not self.context.get("request").user.exists():
+            return Response(status=HTTP_400_BAD_REQUEST)
         if user.is_anonymous:
             return False
         recipe = FavoriteRecipe.objects.filter(
@@ -85,6 +89,8 @@ class RecipeSerializer(serializers.ModelSerializer):
 
     def get_is_in_shopping_cart(self, obj):
         user = self.context.get("request").user
+        if not self.context.get("request").user.exists():
+            return Response(status=HTTP_400_BAD_REQUEST)
         if user.is_anonymous:
             return False
         recipe = FavoriteRecipe.objects.filter(
@@ -194,6 +200,8 @@ class FollowSerializer(serializers.ModelSerializer):
 
     def get_is_subscribed(self, obj):
         user = self.context.get("request").user
+        if not self.context.get("request").user.exists():
+            return Response(status=HTTP_400_BAD_REQUEST)
         if user.is_anonymous:
             return False
         return Follow.objects.filter(author=obj, user=user).exists()

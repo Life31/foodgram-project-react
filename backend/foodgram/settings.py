@@ -3,11 +3,12 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-SECRET_KEY = 'n8!kf4w8p)db$iwhxrq4y5c#*z57vx#i89qdz-9m(yxu#d6bxp'
+SECRET_KEY = os.getenv("SECRET", default='secret_key')
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = os.environ.get("SERVER_NAMES", '').split()
+
 
 
 INSTALLED_APPS = [
@@ -133,3 +134,5 @@ DJOSER = {
         'user_list': ['rest_framework.permissions.AllowAny', ],
     }
 }
+
+RECIPE_NAME_LENGTH = 50

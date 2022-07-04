@@ -1,5 +1,6 @@
 import datetime as dt
 
+from django.db.models import F, Sum
 from django_filters import rest_framework as filters
 from recipes.models import (FavoriteRecipe, Ingredient, IngredientsInRecipes,
                             Recipe, Tag)
@@ -68,8 +69,11 @@ class RecipeViewSet(viewsets.ModelViewSet):
         ).values(
             "ingredient__name",
             "ingredient__measurement_unit",
-            "amount",
-        )
+        ).annotate(
+            name=F('ingredient__name'),
+            units=F('ingredient__measurement_unit'),
+            total=Sum('amount'),
+        ).order_by('-total') 
 
         obj_dic = {
             "file_name": "%s_%s.pdf"
