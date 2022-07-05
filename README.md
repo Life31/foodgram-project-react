@@ -105,13 +105,6 @@ scp nginx.conf <username>@<host>:/home/<username>/nginx.conf
 ## Ссылка на проект
 Проект развернут по адресу http://51.250.12.236/
 
-User администратора
-
-```
-username: admin
-password: admin
-```
-
 ## Автор:
 [Емельянов Николай](https://github.com/Life31)
 
