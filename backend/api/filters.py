@@ -6,13 +6,7 @@ from users.models import User
 
 
 class IngredientFilter(django_filters.FilterSet):
-    name = django_filters.CharFilter(
-        field_name="name", lookup_expr="icontains"
-    )
-
-    class Meta:
-        model = Ingredient
-        fields = ["name"]
+    name = django_filters.CharFilter(lookup_expr='istartswith')
 
 
 class RecipeFilter(django_filters.FilterSet):
