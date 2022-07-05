@@ -18,7 +18,7 @@ from api.paginations import CustomPageSizePagination
 from api.permissions import AdminOrAuthorOrReadOnly
 from api.serializers import (FavoriteRecipeSerializer, IngredientSerialize,
                              RecipeSerializer, TagSerializer)
-
+from .filters import IngredientFilter
 
 class TagViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Tag.objects.all()
@@ -30,9 +30,7 @@ class IngredientsViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerialize
     pagination_class = None
-    filter_backends = (filters.DjangoFilterBackend, rest_filters.SearchFilter)
-    filterset_fields = ("name",)
-    search_fields = ("^name",)
+    filterset_class = IngredientFilter
 
 
 class RecipeViewSet(viewsets.ModelViewSet):
