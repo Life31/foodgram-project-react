@@ -32,6 +32,8 @@ class IngredientsViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = IngredientSerialize
     pagination_class = None
     filterset_class = IngredientFilter
+    filterset_fields = ("name",)
+    search_fields = ("^name",)
 
 
 class RecipeViewSet(viewsets.ModelViewSet):
