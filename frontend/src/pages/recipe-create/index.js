@@ -235,7 +235,7 @@ const RecipeCreate = ({ onEdit }) => {
           disabled={checkIfDisabled()}
           className={styles.button}
         >
-          Создать рецепт
+          Создать этот рецепт
         </Button>
       </Form>
     </Container>
