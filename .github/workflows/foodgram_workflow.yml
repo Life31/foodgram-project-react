@@ -78,10 +78,10 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
           script: |
-            sudo docker-compose stop
-            sudo docker-compose rm backend --force
-            sudo docker-compose rm frontend --force
-            sudo docker-compose up -d
+            sudo docker compose stop
+            sudo docker compose rm --force backend
+            sudo docker compose rm --force frontend
+            sudo docker compose up -d
 
   send_message:
     runs-on: ubuntu-latest
