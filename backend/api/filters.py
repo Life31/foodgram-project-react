@@ -6,7 +6,7 @@ from users.models import User
 
 
 class IngredientFilter(django_filters.FilterSet):
-    name = django_filters.CharFilter(lookup_expr='istartswith')
+    name = django_filters.CharFilter(lookup_expr='startswith')
 
 
 class RecipeFilter(django_filters.FilterSet):
