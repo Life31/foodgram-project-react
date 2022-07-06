@@ -79,9 +79,11 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           script: |
             sudo docker-compose stop
-            sudo docker-compose rm backend
-            sudo docker-compose rm frontend
-            sudo docker-compose up -d --build
+            sudo docker rm life_frontend_1
+            sudo docker rm life_backend_1
+            sudo docker rmi ${{ secrets.DOCKER_USER }}/foodgram_frontend:v1
+            sudo docker rmi ${{ secrets.DOCKER_USER }}/foodgram_backend:v1
+            sudo docker-compose up -d
   send_message:
     runs-on: ubuntu-latest
     needs: deploy
