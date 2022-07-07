@@ -4,6 +4,7 @@ from django.db.models import F, Sum
 from django_filters import rest_framework as filters
 from recipes.models import (FavoriteRecipe, Ingredient, IngredientsInRecipes,
                             Recipe, Tag)
+from rest_framework import filters as rest_filters
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
@@ -12,13 +13,11 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from utils.create_pdf_file import create_pdf
 
-from api.filters import RecipeFilter
+from api.filters import RecipeFilter, IngredientSearchFilter
 from api.paginations import CustomPageSizePagination
 from api.permissions import AdminOrAuthorOrReadOnly
 from api.serializers import (FavoriteRecipeSerializer, IngredientSerialize,
                              RecipeSerializer, TagSerializer)
-
-from .filters import IngredientFilter
 
 
 class TagViewSet(viewsets.ReadOnlyModelViewSet):
@@ -31,7 +30,7 @@ class IngredientsViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerialize
     pagination_class = None
-    filterset_class = IngredientFilter
+    filter_backends = (IngredientSearchFilter,)
     filterset_fields = ("name",)
     search_fields = ("^name",)
 
@@ -163,7 +162,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
         favorite_recipe = FavoriteRecipe.objects.get(
             recipe=recipe_by_id, user=self.request.user
         )
-        if not favorite_recipe.shopping_cart:
+        if not favorite_recipe.favorite:
             raise ValidationError(
                 detail={"error": ["Данного рецепта нет в избранных."]}
             )

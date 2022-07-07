@@ -31,7 +31,7 @@ class IngredientSerialize(serializers.ModelSerializer):
 
     class Meta:
         model = Ingredient
-        fields = ["id", "name", "measurement_unit"]
+        fields = ("id", "name", "measurement_unit")
 
 
 class IngredientsInRecipesSerialize(serializers.ModelSerializer):
@@ -118,7 +118,7 @@ class RecipeSerializer(serializers.ModelSerializer):
             if int(ingredient_item["amount"]) < 1:
                 raise serializers.ValidationError(
                     {
-                        "amount": 'Убедитесь, что это значение не меньше 1.'
+                        "amount": 'Убедитесь, что это значение ингредиента не меньше 1.'
                     }
                 )
             if ingredient in lst_unique_ingredients:
@@ -200,8 +200,6 @@ class FollowSerializer(serializers.ModelSerializer):
 
     def get_is_subscribed(self, obj):
         user = self.context.get("request").user
-        if not self.context.get("request").user.exists():
-            return Response(status=HTTP_400_BAD_REQUEST)
         if user.is_anonymous:
             return False
         return Follow.objects.filter(author=obj, user=user).exists()

@@ -32,49 +32,24 @@ class IngredientAdmin(admin.ModelAdmin):
     )
     list_editable = ("measurement_unit",)
     search_fields = ("name",)
+    
 
-
-@admin.register(IngredientsInRecipes)
-class IngredientInRecipeAdmin(admin.ModelAdmin):
-    autocomplete_fields = ("recipe", "ingredient")
-    list_display = (
-        "recipe",
-        "ingredient",
-        "amount",
-    )
-    search_fields = (
-        "ingredient__name",
-        "recipe__name",
-    )
+class IngredientInRecipeInline(admin.TabularInline):
+    model = IngredientsInRecipes
+    raw_id_fields = ("recipe",)
+    min_num = 1
+    extra = 0
 
 
 @admin.register(Recipe)
 class RecipeAdmin(admin.ModelAdmin):
-    list_display = (
-        "pk",
-        "name",
-        "author",
-        "cooking_time",
-        "favorites",
-    )
-    list_display_links = (
-        "pk",
-        "name",
-    )
-    list_filter = (
-        "author",
-        "name",
-        "tags",
-    )
+    inlines = [
+        IngredientInRecipeInline,
+    ]
     search_fields = (
         "author",
         "name",
     )
-    empty_value_display = "-пусто-"
-
-    @staticmethod
-    def favorites(obj):
-        return obj.favorite.filter(favorite=True).count()
 
 
 @admin.register(FavoriteRecipe)

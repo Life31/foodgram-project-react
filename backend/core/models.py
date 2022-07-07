@@ -3,7 +3,7 @@ from django.db import models
 
 class CreatedModel(models.Model):
     """
-    Кастомная модель. Добавляет дату создания сущности.
+    Абстрактная модель. Добавляет дату создания.
     """
     created = models.DateTimeField(
         'Дата создания',
