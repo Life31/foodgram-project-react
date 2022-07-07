@@ -118,7 +118,8 @@ class RecipeSerializer(serializers.ModelSerializer):
             if int(ingredient_item["amount"]) < 1:
                 raise serializers.ValidationError(
                     {
-                        "amount": 'Убедитесь, что это значение ингредиента не меньше 1.'
+                        "amount": 
+                        'Убедитесь, что это значение ингредиента не меньше 1.'
                     }
                 )
             if ingredient in lst_unique_ingredients:

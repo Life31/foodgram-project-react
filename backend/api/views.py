@@ -1,10 +1,10 @@
 import datetime as dt
 
 from django.db.models import F, Sum
+
 from django_filters import rest_framework as filters
 from recipes.models import (FavoriteRecipe, Ingredient, IngredientsInRecipes,
                             Recipe, Tag)
-from rest_framework import filters as rest_filters
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
